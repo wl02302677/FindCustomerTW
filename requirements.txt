@@ -1,0 +1,5 @@
+elasticsearch==7.15.2
+numpy==1.23.0
+pandas==1.1.5
+BeautifulSoup4==4.11.1
+requests==2.18.1
