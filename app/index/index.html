@@ -37,23 +37,66 @@
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script>
-    function initMap() {
-        var Station_latlng = { lat: 25.0652883, lng: 121.5772416 }; // 國泰世華南內湖分行
-        var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 14, //放大的倍率
-            center: Station_latlng //初始化的地圖中心位置
-        });
+        function initMap() {
+            const Station_cathy = { lat: 25.0416463, lng: 121.5527911}; // 國泰世華南內湖分行
+            const map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 14, //放大的倍率
+                center: Station_cathy //初始化的地圖中心位置
+            });
 
-        //--------下面是呼叫一個新marker------
+            const companys = [
+                {lat: 25.0416463, lng: 121.5527911 , name: "國泰世華忠孝分行"},
+                {lat: 25.0652883, lng: 121.5772416 , name: "國泰世華南內湖分行"},
+                {lat: 25.074529, lng: 121.6047287 , name: "國泰世華東湖分行"},
+                {lat: 25.13068, lng: 121.7443842 , name: "宏基企業股份有限公司"},
+            ];
 
-        var marker = new google.maps.Marker({
-            position: Station_latlng, //marker的放置位置
-            map: map //這邊的map指的是第四行的map變數
-        });
+            const infowindow = new google.maps.InfoWindow();
+            
+            const marker = new google.maps.Marker({
+                position: Station_cathy,
+                map,
+                title: "國泰世華忠孝分行",
+            });
 
-    }
+            marker.addListener("click", () => {
+                infowindow.setContent('<div id="infowindow">${loc.name}</div>');
+                infowindow.open({
+                anchor: marker,
+                map,
+                shouldFocus: false,
+                });
+            });
+
+
+            function placeMarker( loc ) {
+                // const infoWindow = new google.maps.InfoWindow();
+                const marker = new google.maps.Marker({
+                    position : new google.maps.LatLng( loc.lat, loc.lng ),
+                    map : map,
+                    title : loc.name
+                });
+                // 
+                marker.addListener("click", () => {
+                    infowindow.setContent('<div id="infowindow">${loc.name}</div>');
+                    infowindow.open({
+                        anchor: marker,
+                        map,
+                        shouldFocus: false,
+                    });
+                });
+            } 
+
+            companys.forEach(placeMarker);
+        }
+
+        window.initMap = initMap;
+        
+
+    // <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_Za7RqKvUuEg2Nln0EcpUVN3k2fZtDuE&callback=initMap">
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_Za7RqKvUuEg2Nln0EcpUVN3k2fZtDuE&callback=initMap">
+    // <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDx_eyFIbXsetU7daSbseiHK7fN3egA_TE&callback==initMap"> 
     </script>
 </body>
 
