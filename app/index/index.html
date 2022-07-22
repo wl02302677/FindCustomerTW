@@ -48,28 +48,24 @@
                 {lat: 25.0416463, lng: 121.5527911 , name: "國泰世華忠孝分行"},
                 {lat: 25.0652883, lng: 121.5772416 , name: "國泰世華南內湖分行"},
                 {lat: 25.074529, lng: 121.6047287 , name: "國泰世華東湖分行"},
-                {lat: 25.13068, lng: 121.7443842 , name: "宏基企業股份有限公司"},
+                {lat: 25.13068, lng: 121.7443842 , name: "宏基企業股份有限公司", address: "基隆市中正區信二路287號", tw_business_accounting_no: "00663865", paid_in_capital_amount: 2000000, company_setup_date: 2022-07-01, category: "室內裝潢", responsible_name: "洪馨萍"},
             ];
 
             const infowindow = new google.maps.InfoWindow();
-            
-            const marker = new google.maps.Marker({
-                position: Station_cathy,
-                map,
-                title: "國泰世華忠孝分行",
-            });
-
-            marker.addListener("click", () => {
-                infowindow.setContent('<div id="infowindow">${loc.name}</div>');
-                infowindow.open({
-                anchor: marker,
-                map,
-                shouldFocus: false,
-                });
-            });
-
 
             function placeMarker( loc ) {
+                function setInfoWindowContent( map ){
+                    htmlText =
+                    `<div id="infowindow"><h2>${map.name}</h2>
+                        <div jstcache="4" jsinstance="*0" class="address-line full-width" jsan="7.address-line,7.full-width">統編:${map.tw_business_accounting_no}</div>
+                        <div jstcache="4" jsinstance="*0" class="address-line full-width" jsan="7.address-line,7.full-width">行業別:${map.category}</div>
+                        <div jstcache="4" jsinstance="*0" class="address-line full-width" jsan="7.address-line,7.full-width">資本額(實收):${map.tw_business_accounting_no}</div>
+                        <div jstcache="4" jsinstance="*0" class="address-line full-width" jsan="7.address-line,7.full-width">代表人:${map.responsible_name}</div>
+                        <div jstcache="4" jsinstance="*0" class="address-line full-width" jsan="7.address-line,7.full-width">地址:${map.address}</div>
+                        </div>`
+
+                    return htmlText
+                }
                 // const infoWindow = new google.maps.InfoWindow();
                 const marker = new google.maps.Marker({
                     position : new google.maps.LatLng( loc.lat, loc.lng ),
@@ -78,7 +74,7 @@
                 });
                 // 
                 marker.addListener("click", () => {
-                    infowindow.setContent('<div id="infowindow">${loc.name}</div>');
+                    infowindow.setContent(setInfoWindowContent(loc))
                     infowindow.open({
                         anchor: marker,
                         map,
@@ -93,10 +89,9 @@
         window.initMap = initMap;
         
 
-    // <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_Za7RqKvUuEg2Nln0EcpUVN3k2fZtDuE&callback=initMap">
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_Za7RqKvUuEg2Nln0EcpUVN3k2fZtDuE&callback=initMap">
-    // <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDx_eyFIbXsetU7daSbseiHK7fN3egA_TE&callback==initMap"> 
+    
     </script>
 </body>
 
