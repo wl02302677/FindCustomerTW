@@ -15,6 +15,9 @@ class OpenSrcDataImporter:
         df = pd.read_csv(path)
         return df
 
+    def save_to_mongo(self):
+        print('save process ....')
+
     def process_flow(self):
         company_df = self.read_csv(self.path)
         print(company_df.to_string())
