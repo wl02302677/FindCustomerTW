@@ -53,7 +53,12 @@ class OpenDataCSVCrawler:
 
             # TODO:標題與檔名不符，之後優化
             if file_name == '公司登記(依營業項目別)－農產品批發市場業':
-                file_name = '公司登記(依營業項目別)－農產品批發市場'
+                # or file_name == '公司登記(依營業項目別)－其他餐飲業'
+                file_name = file_name[0:-1]
+            elif file_name == '公司登記(依營業項目別)－飲酒店業':
+                file_name = '公司登記(依營業項目別)－飲酒行業'
+            elif file_name == '公司登記(依營業項目別)－其他餐飲':
+                file_name = '公司登記(依營業項目別)－其他餐飲業'
 
             file_path = self.download_path + file_name + '.zip'
             file_list.append(file_name)
@@ -64,6 +69,9 @@ class OpenDataCSVCrawler:
             link = href_info.get_attribute("href")
             # Logger.info('entry: ' + link)
             Logger.info(self.download_page_crawler(link, file_name, driver))
+
+            # TODO: save infomation to db include: file_name, file_path, open_data_last_upd_date, file_size,
+            #  create_date, last_upd_date...etc
 
             # check if file download complete
             if not self.check_file_exist(file_path):
@@ -97,18 +105,20 @@ class OpenDataCSVCrawler:
                 # TODO:write file name to error db
 
     def check_file_exist(self, file_path):
-        count = 1
+        wait_download_times = 0
         if os.path.exists(file_path):
             return True
         else:
             Logger.info(file_path)
             Logger.info('Not download finish yet... wait 5 seconds')
             time.sleep(5)
-            self.check_file_exist(file_path)
-            count += 1
 
-            if count > 5:
+            wait_download_times += 1
+            if wait_download_times > 100:
+                Logger.info('download duration over 10 minutes...pass')
                 return False
+            else:
+                self.check_file_exist(file_path)
 
     def process_flow(self):
         Logger.info('process begin.....')
@@ -118,10 +128,16 @@ class OpenDataCSVCrawler:
 
 
 if __name__ == '__main__':
-    # crawler = OpenDataCSVCrawler()
-    # crawler.process_flow()
+    crawler = OpenDataCSVCrawler()
+    crawler.process_flow()
 
-    if os.path.exists("C:/Users/ZZ01E1858/Downloads/公司登記(依營業項目別)－農產品批發市場業.zip"):
-        print('exist')
-    else:
-        print('not exist')
+
+
+    # test area
+    # if os.path.exists("C:/Users/ZZ01E1858/Downloads/公司登記(依營業項目別)－飲酒店業.zip"):
+    #     print('exist')
+    # else:
+    #     print('not exist')
+
+    # file_name = '公司登記(依營業項目別)－農產品批發市場業'
+    # print(file_name[0:-1])
