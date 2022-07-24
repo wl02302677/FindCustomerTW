@@ -5,7 +5,7 @@ basic_path: 'C:/Users/ZZ01E1858/FindCustomerTW/main/db/'
 base_url: 'https://data.gcis.nat.gov.tw/od/datacategory'
 
 # download path
-download_path: 'C:\Users\ZZ01E1858\Downloads'
+download_path: 'C:/Users/ZZ01E1858/Downloads/'
 
 # save path
-save_path: 'C:\Users\ZZ01E1858\FindCustomerTW_file'
+save_path: 'C:/Users/ZZ01E1858/FindCustomerTW_file/'
