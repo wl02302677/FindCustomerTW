@@ -50,15 +50,24 @@ class OpenDataCSVCrawler:
         for li_item in cates_li:
             href_info = li_item.find_element(By.TAG_NAME, "a")
             file_name = href_info.text
+
+            # TODO:標題與檔名不符，之後優化
+            if file_name == '公司登記(依營業項目別)－農產品批發市場業':
+                file_name = '公司登記(依營業項目別)－農產品批發市場'
+
+            file_path = self.download_path + file_name + '.zip'
             file_list.append(file_name)
+            if os.path.exists(file_path):
+                Logger.info('already download...pass this one')
+                continue
+
             link = href_info.get_attribute("href")
-            Logger.info('entry: ' + link)
+            # Logger.info('entry: ' + link)
             Logger.info(self.download_page_crawler(link, file_name, driver))
-            time.sleep(1)
 
             # check if file download complete
-            file_path = self.download_path + file_name + '.zip'
-            self.check_file_exist(file_path)
+            if not self.check_file_exist(file_path):
+                continue
         time.sleep(2)
         driver.close()
         return file_list
@@ -88,11 +97,18 @@ class OpenDataCSVCrawler:
                 # TODO:write file name to error db
 
     def check_file_exist(self, file_path):
+        count = 1
         if os.path.exists(file_path):
             return True
         else:
+            Logger.info(file_path)
+            Logger.info('Not download finish yet... wait 5 seconds')
             time.sleep(5)
             self.check_file_exist(file_path)
+            count += 1
+
+            if count > 5:
+                return False
 
     def process_flow(self):
         Logger.info('process begin.....')
@@ -102,5 +118,10 @@ class OpenDataCSVCrawler:
 
 
 if __name__ == '__main__':
-    crawler = OpenDataCSVCrawler()
-    crawler.process_flow()
+    # crawler = OpenDataCSVCrawler()
+    # crawler.process_flow()
+
+    if os.path.exists("C:/Users/ZZ01E1858/Downloads/公司登記(依營業項目別)－農產品批發市場業.zip"):
+        print('exist')
+    else:
+        print('not exist')
