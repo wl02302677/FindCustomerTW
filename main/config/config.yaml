@@ -2,4 +2,4 @@
 basic_path: 'C:/Users/ZZ01E1858/FindCustomerTW/main/db/'
 
 # basic crawler url
-basic_url: 'https://data.gcis.nat.gov.tw/od/datacategory'
+base_url: 'https://data.gcis.nat.gov.tw/od/datacategory'
