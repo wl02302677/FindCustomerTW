@@ -7,5 +7,8 @@ base_url: 'https://data.gcis.nat.gov.tw/od/datacategory'
 # download path
 download_path: 'C:/Users/ZZ01E1858/Downloads/'
 
-# save path
-save_path: 'C:/Users/ZZ01E1858/FindCustomerTW_file/'
+# save zip path
+save_zip_path: 'C:/Users/ZZ01E1858/FindCustomerTW_file/zip'
+
+# save csv path
+save_csv_path: 'C:/Users/ZZ01E1858/FindCustomerTW_file/csv'

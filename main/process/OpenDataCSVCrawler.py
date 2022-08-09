@@ -95,7 +95,7 @@ class OpenDataCSVCrawler:
     def move_file(self, file_list):
         for file_name in file_list:
             try:
-                save_path = self.configutil.get_config('save_path')
+                save_path = self.configutil.get_config('save_zip_path')
                 file_path_from = self.download_path + file_name + '.zip'
                 file_path_to = save_path + file_name + '.zip'
                 os.replace(file_path_from, file_path_to)
