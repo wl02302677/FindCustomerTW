@@ -1,8 +1,8 @@
 # FindCustomerTW
 Develop for those sales who want to find customer/company basic open data in google map
 
-1. 下載 csv OK
-2. 搬檔 OK
+1. 下載 csv done
+2. 搬檔 done
 3. unzip and raw info to db
 4. load csv and write to db (quick -> frontEnd load csv)
 5. frontEbd load db
