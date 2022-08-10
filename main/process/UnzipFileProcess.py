@@ -4,6 +4,7 @@ import zipfile
 
 import yaml
 from pathlib import Path
+
 from utils.Logger import Logger
 
 
@@ -21,13 +22,20 @@ class UnzipFileProcess:
     def zip_file(self):
         return 'zip file done'
 
-    def unzip_file(self, path_to_zip_file: str, directory_to_extract_to: str, zip_name:str):
+    def unzip_file(self, path_to_zip_file: str, directory_to_extract_to: str, zip_name: str):
         with zipfile.ZipFile(path_to_zip_file, 'r') as zip_ref:
             for file_name in zip_ref.namelist():
-                csv_name = zip_name.replace('zip', 'csv')
-                extracted_path = Path(zip_ref.extract(file_name))
-                # zipfile chinese decode problem, use zip file name replace
-                extracted_path.rename(directory_to_extract_to + csv_name)
+                try:
+                    csv_name = zip_name.replace('zip', 'csv')
+                    extracted_path = Path(zip_ref.extract(file_name))
+                    csv_extract_file_path = directory_to_extract_to + csv_name
+                    if os.path.exists(csv_extract_file_path):
+                        os.remove(csv_extract_file_path)
+
+                    # zipfile chinese decode problem, use zip file name replace
+                    extracted_path.rename(csv_extract_file_path)
+                except Exception:
+                    Logger.info(zip_name + ' file broken, save to error db')
 
     def process(self):
         directory = os.fsencode(self.zip_path)
